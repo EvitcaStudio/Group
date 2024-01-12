@@ -300,9 +300,21 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/group.mjs~group#attachmethod",
+    "class/src/group.mjs~Group.html#instance-method-attachMethod",
+    "src/group.mjs~Group#attachMethod",
+    "method"
+  ],
+  [
     "src/group.mjs~group#collection",
     "class/src/group.mjs~Group.html#instance-member-collection",
     "src/group.mjs~Group#collection",
+    "member"
+  ],
+  [
+    "src/group.mjs~group#collectionweakmap",
+    "class/src/group.mjs~Group.html#instance-member-collectionWeakMap",
+    "src/group.mjs~Group#collectionWeakMap",
     "member"
   ],
   [
@@ -315,6 +327,12 @@ window.esdocSearchIndex = [
     "src/group.mjs~group#foreach",
     "class/src/group.mjs~Group.html#instance-method-forEach",
     "src/group.mjs~Group#forEach",
+    "method"
+  ],
+  [
+    "src/group.mjs~group#generateid",
+    "class/src/group.mjs~Group.html#instance-method-generateID",
+    "src/group.mjs~Group#generateID",
     "method"
   ],
   [
@@ -346,5 +364,11 @@ window.esdocSearchIndex = [
     "class/src/group.mjs~Group.html#static-method-create",
     "src/group.mjs~Group.create",
     "method"
+  ],
+  [
+    "src/group.mjs~group.storedids",
+    "class/src/group.mjs~Group.html#static-member-storedIDs",
+    "src/group.mjs~Group.storedIDs",
+    "member"
   ]
 ]

@@ -567,7 +567,7 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/group.mjs",
-    "content": "/**\r\n * A class that groups elements together and allow them to act as one.\r\n * Represents a group of elements with chainable operations.\r\n * @class\r\n */\r\nclass Group {\r\n    /**\r\n     * The version of the module.\r\n     */\r\n    version = \"VERSION_REPLACE_ME\";\r\n    /**\r\n     * Constructs a new Group instance.\r\n     * @param {Array} collection - The initial collection to be grouped.\r\n     */\r\n    constructor(pCollection) {\r\n        if (Array.isArray(pCollection)) {\r\n            /**\r\n             * The internal collection of elements.\r\n             * @type {Array}\r\n             * @private\r\n             */\r\n            this.collection = [...pCollection];\r\n        }\r\n    }\r\n    /**\r\n     * Creates a new Group instance.\r\n     * @param {Array} pCollection - The initial collection to be grouped.\r\n     * @returns {Group} A new Group instance.\r\n     */\r\n    static create(pCollection) {\r\n        return new Group(pCollection);\r\n    }\r\n    /**\r\n     * Applies a function to each element in the group.\r\n     * @param {Function} pCallback - The function to apply to each element.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    map(pCallback) {\r\n        this.collection = this.collection.map(pCallback);\r\n        return this;\r\n    }\r\n    /**\r\n     * Iterates over each element in the group.\r\n     * @param {Function} pCallback - The function to execute for each element.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    forEach(pCallback) {\r\n        this.collection.forEach(pCallback);\r\n        return this;\r\n    }\r\n    /**\r\n     * Converts the group to a new array.\r\n     * @returns {Array} A shallow copy of the current collection.\r\n     */\r\n    toArray() {\r\n        return [...this.collection];\r\n    }\r\n    /**\r\n     * Adds an item to the group if it doesn't already exist.\r\n     * @param {*} pItem - The item to add to the group.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    add(pItem) {\r\n        if (!this.collection.includes(pItem)) {\r\n            this.collection.push(pItem);\r\n        }\r\n        return this;\r\n    }\r\n    /**\r\n     * Removes an item from the group if it exists.\r\n     * @param {*} pItem - The item to remove from the group.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    remove(pItem) {\r\n        if (this.collection.includes(pItem)) {\r\n            this.collection.splice(this.collection.indexOf(pItem), 1);\r\n        }\r\n        return this;\r\n    }\r\n}\r\n\r\nexport { Group };",
+    "content": "/**\r\n * A class that groups elements together and allow them to act as one.\r\n * Represents a group of elements with chainable operations.\r\n * @class\r\n */\r\nclass Group {\r\n\t/**\r\n\t * Weakmap to track data belonging to elements used in this module.\r\n\t * @private\r\n\t * @type {WeakMap}\r\n\t */\r\n\tcollectionWeakMap = new WeakMap();\r\n\t/**\r\n\t * Array of stored IDs so that multiple of the same ID cannot be claimed\r\n\t * @private\r\n\t * @type {Array}\r\n\t */\r\n\tstatic storedIDs = [];\r\n    /**\r\n     * The version of the module.\r\n     */\r\n    version = \"VERSION_REPLACE_ME\";\r\n    /**\r\n     * Constructs a new Group instance.\r\n     * @param {Array} pCollection - The initial collection to be grouped.\r\n     * @param {Object} pMethods - An object containing methods to attach to this group.\r\n     */\r\n    constructor(pCollection, pMethods) {\r\n        if (Array.isArray(pCollection)) {\r\n            /**\r\n             * The internal collection of elements.\r\n             * @type {Array}\r\n             * @private\r\n             */\r\n            this.collection = [...pCollection];\r\n            this.collection.forEach((pElement) => {\r\n                /**\r\n                 * Assign an ID object to each element in this group.\r\n                 */\r\n                this.collectionWeakMap.set(pElement, { 'id': this.generateID() });\r\n                /**\r\n                 * Assign a method event object to the ID attached to the element.\r\n                 */\r\n                this.collectionWeakMap.set(this.collectionWeakMap.get(pElement), {});\r\n            });\r\n        }\r\n        // Check the type of the passed methods object\r\n        if (typeof(pMethods) === 'object' && pMethods.constructor === Object) {\r\n            for (const method in pMethods) {\r\n                this.attachMethod(method, pMethods[method]);\r\n            }\r\n        }\r\n    }\r\n\t/**\r\n\t * Generates a random ID based on the specified length and ensures its uniqueness\r\n\t * within the stored IDs.\r\n\t * @private\r\n\t * @param {number} [pID = 7] - The length of the generated ID.\r\n\t * @returns {string} A unique random ID.\r\n\t */\r\n\tgenerateID(pID = 7) {\r\n\t\tconst chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r\n\t\tconst makeID = function() {\r\n\t\t\tlet ID = '';\r\n\t\t\tfor (let i = 0; i < pID; i++) {\r\n\t\t\t\tID += chars.charAt(Math.floor(Math.random() * chars.length));\r\n\t\t\t}\r\n\t\t\treturn ID;\r\n\t\t}\r\n\t\tlet ID = makeID();\r\n\t\twhile(Group.storedIDs.includes(ID)) {\r\n\t\t\tID = makeID();\r\n\t\t}\r\n\t\tGroup.storedIDs.push(ID);\r\n\t\treturn ID;\r\n\t}\r\n    /**\r\n     * Creates a new Group instance.\r\n     * @param {Array} pCollection - The initial collection to be grouped.\r\n     * @param {Object} pMethods - An object containing methods to attach to this group.\r\n     * @returns {Group} A new Group instance.\r\n     */\r\n    static create(pCollection, pMethods) {\r\n        return new Group(pCollection, pMethods);\r\n    }\r\n    /**\r\n     * Applies a function to each element in the group.\r\n     * @param {Function} pCallback - The function to apply to each element.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    map(pCallback) {\r\n        this.collection = this.collection.map(pCallback);\r\n        return this;\r\n    }\r\n    /**\r\n     * Iterates over each element in the group.\r\n     * @param {Function} pCallback - The function to execute for each element.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    forEach(pCallback) {\r\n        this.collection.forEach(pCallback);\r\n        return this;\r\n    }\r\n    /**\r\n     * Converts the group to a new array.\r\n     * @returns {Array} A shallow copy of the current collection.\r\n     */\r\n    toArray() {\r\n        return [...this.collection];\r\n    }\r\n    /**\r\n     * Adds an item to the group if it doesn't already exist.\r\n     * @param {*} pItem - The item to add to the group.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    add(pItem) {\r\n        if (!this.collection.includes(pItem)) {\r\n            this.collection.push(pItem);\r\n            /**\r\n             * Assign an ID object to the new element in this group.\r\n             */\r\n            this.collectionWeakMap.set(pItem, { 'id': this.generateID() });\r\n            /**\r\n             * Assign a method event object to the ID attached to the element.\r\n             */\r\n            this.collectionWeakMap.set(this.collectionWeakMap.get(pItem), {});\r\n        }\r\n        return this;\r\n    }\r\n    /**\r\n     * Removes an item from the group if it exists.\r\n     * @param {*} pItem - The item to remove from the group.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    remove(pItem) {\r\n        if (this.collection.includes(pItem)) {\r\n            // Remove the ID from the item being removed from this group\r\n            if (this.collectionWeakMap.has(pItem)) {\r\n                // Remove method event object\r\n                if (this.collectionWeakMap.has(this.collectionWeakMap.get(pItem))) {\r\n                    this.collectionWeakMap.delete(this.collectionWeakMap.get(pItem));\r\n                }\r\n                this.collectionWeakMap.delete(pItem);\r\n            }\r\n            this.collection.splice(this.collection.indexOf(pItem), 1);\r\n        }\r\n        return this;\r\n    }\r\n    /**\r\n     * Attaches a method to the group, allowing it to be called on the group to execute the method on each element.\r\n     * @param {string} pMethodName - The name of the method to attach.\r\n     * @param {Function} pMethod - The method.\r\n     * @returns {Group} The current Group instance for chaining.\r\n     */\r\n    attachMethod(pMethodName, pMethod) {\r\n        /**\r\n         * Calls the provided method on each element in the group.\r\n         */\r\n        this.collection.forEach((pElement) => {\r\n            const methodObject = this.collectionWeakMap.get(this.collectionWeakMap.get(pElement));\r\n            // Store the method\r\n            methodObject[pMethodName] = pMethod.bind(this);\r\n        });\r\n\r\n        this[pMethodName] = function(...pArgs) {\r\n            this.collection.forEach((pElement) => {\r\n                // Call the stored method\r\n                const methodObject = this.collectionWeakMap.get(this.collectionWeakMap.get(pElement));\r\n                methodObject[pMethodName](pElement, ...pArgs);\r\n            });\r\n        }\r\n        return this;\r\n    }\r\n}\r\n\r\nexport { Group };",
     "static": true,
     "longname": "C:/Users/jared/Documents/Github/Group/src/group.mjs",
     "access": "public",
@@ -598,54 +598,32 @@
   {
     "__docId__": 50,
     "kind": "member",
-    "name": "version",
+    "name": "collectionWeakMap",
     "memberof": "src/group.mjs~Group",
     "static": false,
-    "longname": "src/group.mjs~Group#version",
-    "access": "public",
-    "description": "The version of the module.",
-    "lineNumber": 10,
+    "longname": "src/group.mjs~Group#collectionWeakMap",
+    "access": "private",
+    "description": "Weakmap to track data belonging to elements used in this module.",
+    "lineNumber": 12,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "WeakMap"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
     "__docId__": 51,
-    "kind": "constructor",
-    "name": "constructor",
-    "memberof": "src/group.mjs~Group",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/group.mjs~Group#constructor",
-    "access": "public",
-    "description": "Constructs a new Group instance.",
-    "lineNumber": 15,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Array"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "collection",
-        "description": "The initial collection to be grouped."
-      }
-    ]
-  },
-  {
-    "__docId__": 52,
     "kind": "member",
-    "name": "collection",
+    "name": "storedIDs",
     "memberof": "src/group.mjs~Group",
-    "static": false,
-    "longname": "src/group.mjs~Group#collection",
+    "static": true,
+    "longname": "src/group.mjs~Group.storedIDs",
     "access": "private",
-    "description": "The internal collection of elements.",
-    "lineNumber": 22,
+    "description": "Array of stored IDs so that multiple of the same ID cannot be claimed",
+    "lineNumber": 18,
     "type": {
       "nullable": null,
       "types": [
@@ -656,7 +634,118 @@
     }
   },
   {
+    "__docId__": 52,
+    "kind": "member",
+    "name": "version",
+    "memberof": "src/group.mjs~Group",
+    "static": false,
+    "longname": "src/group.mjs~Group#version",
+    "access": "public",
+    "description": "The version of the module.",
+    "lineNumber": 22,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
     "__docId__": 53,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/group.mjs~Group",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/group.mjs~Group#constructor",
+    "access": "public",
+    "description": "Constructs a new Group instance.",
+    "lineNumber": 28,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pCollection",
+        "description": "The initial collection to be grouped."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pMethods",
+        "description": "An object containing methods to attach to this group."
+      }
+    ]
+  },
+  {
+    "__docId__": 54,
+    "kind": "member",
+    "name": "collection",
+    "memberof": "src/group.mjs~Group",
+    "static": false,
+    "longname": "src/group.mjs~Group#collection",
+    "access": "private",
+    "description": "The internal collection of elements.",
+    "lineNumber": 35,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "method",
+    "name": "generateID",
+    "memberof": "src/group.mjs~Group",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/group.mjs~Group#generateID",
+    "access": "private",
+    "description": "Generates a random ID based on the specified length and ensures its uniqueness\nwithin the stored IDs.",
+    "lineNumber": 61,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} A unique random ID."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": " 7",
+        "defaultRaw": 7,
+        "name": "pID",
+        "description": "The length of the generated ID."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "A unique random ID."
+    }
+  },
+  {
+    "__docId__": 56,
     "kind": "method",
     "name": "create",
     "memberof": "src/group.mjs~Group",
@@ -666,7 +755,7 @@
     "longname": "src/group.mjs~Group.create",
     "access": "public",
     "description": "Creates a new Group instance.",
-    "lineNumber": 30,
+    "lineNumber": 83,
     "unknown": [
       {
         "tagName": "@returns",
@@ -683,6 +772,16 @@
         "optional": false,
         "name": "pCollection",
         "description": "The initial collection to be grouped."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pMethods",
+        "description": "An object containing methods to attach to this group."
       }
     ],
     "return": {
@@ -695,7 +794,7 @@
     }
   },
   {
-    "__docId__": 54,
+    "__docId__": 57,
     "kind": "method",
     "name": "map",
     "memberof": "src/group.mjs~Group",
@@ -705,7 +804,7 @@
     "longname": "src/group.mjs~Group#map",
     "access": "public",
     "description": "Applies a function to each element in the group.",
-    "lineNumber": 38,
+    "lineNumber": 91,
     "unknown": [
       {
         "tagName": "@returns",
@@ -734,7 +833,7 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 59,
     "kind": "method",
     "name": "forEach",
     "memberof": "src/group.mjs~Group",
@@ -744,7 +843,7 @@
     "longname": "src/group.mjs~Group#forEach",
     "access": "public",
     "description": "Iterates over each element in the group.",
-    "lineNumber": 47,
+    "lineNumber": 100,
     "unknown": [
       {
         "tagName": "@returns",
@@ -773,7 +872,7 @@
     }
   },
   {
-    "__docId__": 57,
+    "__docId__": 60,
     "kind": "method",
     "name": "toArray",
     "memberof": "src/group.mjs~Group",
@@ -783,7 +882,7 @@
     "longname": "src/group.mjs~Group#toArray",
     "access": "public",
     "description": "Converts the group to a new array.",
-    "lineNumber": 55,
+    "lineNumber": 108,
     "unknown": [
       {
         "tagName": "@returns",
@@ -801,7 +900,7 @@
     "params": []
   },
   {
-    "__docId__": 58,
+    "__docId__": 61,
     "kind": "method",
     "name": "add",
     "memberof": "src/group.mjs~Group",
@@ -811,7 +910,7 @@
     "longname": "src/group.mjs~Group#add",
     "access": "public",
     "description": "Adds an item to the group if it doesn't already exist.",
-    "lineNumber": 63,
+    "lineNumber": 116,
     "unknown": [
       {
         "tagName": "@returns",
@@ -840,7 +939,7 @@
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 62,
     "kind": "method",
     "name": "remove",
     "memberof": "src/group.mjs~Group",
@@ -850,7 +949,7 @@
     "longname": "src/group.mjs~Group#remove",
     "access": "public",
     "description": "Removes an item from the group if it exists.",
-    "lineNumber": 74,
+    "lineNumber": 135,
     "unknown": [
       {
         "tagName": "@returns",
@@ -879,6 +978,55 @@
     }
   },
   {
+    "__docId__": 63,
+    "kind": "method",
+    "name": "attachMethod",
+    "memberof": "src/group.mjs~Group",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/group.mjs~Group#attachMethod",
+    "access": "public",
+    "description": "Attaches a method to the group, allowing it to be called on the group to execute the method on each element.",
+    "lineNumber": 155,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Group} The current Group instance for chaining."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pMethodName",
+        "description": "The name of the method to attach."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pMethod",
+        "description": "The method."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Group"
+      ],
+      "spread": false,
+      "description": "The current Group instance for chaining."
+    }
+  },
+  {
     "kind": "index",
     "content": "# Group\r\nThe Group module is a powerful utility designed to simplify the manipulation of collections in JavaScript. It enables you to treat a set of elements as a single unit, allowing you to perform actions on the entire group without the need for cumbersome loops.\r\n\r\n```js\r\n// Example usage:\r\n/**\r\n * An example group of objects with 'x' property.\r\n * @type {Group}\r\n */\r\nconst myGroup = Group.create([\r\n  { x: 10, y: 20 },\r\n  { x: 15, y: 25 },\r\n  { x: 20, y: 30 }\r\n]);\r\n\r\n// Using forEach to change the 'x' value of each object in the group.\r\nmyGroup.forEach((pElement) => {\r\n  pElement.x += 5;\r\n}).forEach((pElement) => {\r\n    console.log(pElement.x, pElement.y);\r\n});\r\n// Output: 15 20\r\n//         20 25\r\n//         25 30\r\n\r\n// Example usage:\r\n/**\r\n * An example group of numbers.\r\n * @type {Group}\r\n */\r\nconst myGroup2 = Group.create([1, 2, 3, 4]);\r\n\r\n// Apply transformation and iterate over the elements.\r\nmyGroup2.map((pValue) => {\r\n    return pValue * 3;\r\n}).forEach((pValue) => {\r\n    console.log(pValue);\r\n});\r\n// Output: 3, 6, 9, 12\r\n```",
     "longname": "C:\\Users\\jared\\Documents\\Github\\Group\\README.md",
@@ -888,7 +1036,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"group\",\n  \"version\": \"1.0.0\",\n  \"description\": \"The Group module is a powerful utility designed to simplify the manipulation of collections in JavaScript. It enables you to treat a set of elements as a single unit, allowing you to perform actions on the entire group without the need for cumbersome loops.\",\n  \"main\": \"dist/group.min.mjs\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\n    \"build\": \"npx webpack && npm run build:minify && node add-version-script.js && node add-banner-script.js\",\n    \"build:minify\": \"uglifyjs dist/group.min.mjs -m -c --comments -o dist/group.min.mjs\",\n    \"build:prod\": \"npx webpack --mode production && npm run build:minify && node add-version-script.js && node add-banner-script.js && npm run build:docs\",\n    \"build:docs\": \"esdoc -c esdoc.json\"\n  },\n  \"keywords\": [],\n  \"author\": \"https://github.com/doubleactii\",\n  \"license\": \"SEE LICENSE IN LICENSE.md\",\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/EvitcaStudio/Group.git\"\n  },\n  \"devDependencies\": {\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"uglify-js\": \"^3.17.4\",\n    \"webpack\": \"^5.89.0\",\n    \"webpack-cli\": \"^5.1.4\"\n  }\n}\n",
+    "content": "{\r\n  \"name\": \"group\",\r\n  \"version\": \"1.0.0\",\r\n  \"description\": \"The Group module is a powerful utility designed to simplify the manipulation of collections in JavaScript. It enables you to treat a set of elements as a single unit, allowing you to perform actions on the entire group without the need for cumbersome loops.\",\r\n  \"main\": \"dist/group.min.mjs\",\r\n  \"scripts\": {\r\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\",\r\n    \"build\": \"npx webpack && npm run build:minify && node add-version-script.js && node add-banner-script.js\",\r\n    \"build:minify\": \"uglifyjs dist/group.min.mjs -m -c --comments -o dist/group.min.mjs\",\r\n    \"build:prod\": \"npx webpack --mode production && npm run build:minify && node add-version-script.js && node add-banner-script.js && npm run build:docs\",\r\n    \"build:docs\": \"esdoc -c esdoc.json\"\r\n  },\r\n  \"keywords\": [],\r\n  \"author\": \"https://github.com/doubleactii\",\r\n  \"license\": \"SEE LICENSE IN LICENSE.md\",\r\n  \"repository\": {\r\n    \"type\": \"git\",\r\n    \"url\": \"https://github.com/EvitcaStudio/Group.git\"\r\n  },\r\n  \"devDependencies\": {\r\n    \"esdoc\": \"^1.1.0\",\r\n    \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\r\n    \"esdoc-standard-plugin\": \"^1.0.0\",\r\n    \"uglify-js\": \"^3.17.4\",\r\n    \"webpack\": \"^5.89.0\",\r\n    \"webpack-cli\": \"^5.1.4\"\r\n  }\r\n}\r\n",
     "longname": "C:\\Users\\jared\\Documents\\Github\\Group\\package.json",
     "name": "package.json",
     "static": true,

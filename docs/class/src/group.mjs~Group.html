@@ -75,7 +75,42 @@ Represents a group of elements with chainable operations.</p>
   
 </div>
 
-
+<div data-ice="staticMemberSummary"><h2>Static Member Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Static Private Members</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#static-member-storedIDs">storedIDs</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Array of stored IDs so that multiple of the same ID cannot be claimed</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
 <div data-ice="staticMethodSummary"><h2>Static Method Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Static Public Methods</td></tr></thead>
   <tbody>
@@ -94,7 +129,7 @@ Represents a group of elements with chainable operations.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#static-method-create">create</a></span></span><span class="code" data-ice="signature">(pCollection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/group.mjs~Group.html">Group</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#static-method-create">create</a></span></span><span class="code" data-ice="signature">(pCollection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, pMethods: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/group.mjs~Group.html">Group</a></span></span>
         </p>
       </div>
       <div>
@@ -130,7 +165,7 @@ Represents a group of elements with chainable operations.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(collection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(pCollection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, pMethods: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -216,6 +251,35 @@ Represents a group of elements with chainable operations.</p>
       
     </td>
   </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#instance-member-collectionWeakMap">collectionWeakMap</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Weakmap to track data belonging to elements used in this module.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
 </tbody>
 </table>
 </div>
@@ -244,6 +308,35 @@ Represents a group of elements with chainable operations.</p>
         
         
         <div data-ice="description"><p>Adds an item to the group if it doesn&apos;t already exist.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#instance-method-attachMethod">attachMethod</a></span></span><span class="code" data-ice="signature">(pMethodName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, pMethod: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/group.mjs~Group.html">Group</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Attaches a method to the group, allowing it to be called on the group to execute the method on each element.</p>
 </div>
       </div>
     </td>
@@ -370,11 +463,93 @@ Represents a group of elements with chainable operations.</p>
   </tr>
 </tbody>
 </table>
+<table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Private Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/group.mjs~Group.html#instance-method-generateID">generateID</a></span></span><span class="code" data-ice="signature">(pID: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Generates a random ID based on the specified length and ensures its uniqueness
+within the stored IDs.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
 </div>
 
 
 
+<div data-ice="staticMemberDetails"><h2 data-ice="title">Static Private Members</h2>
 
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-member-storedIDs">
+    <span class="access" data-ice="access">private</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">storedIDs</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber18">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Array of stored IDs so that multiple of the same ID cannot be claimed</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
 <div data-ice="staticMethodDetails"><h2 data-ice="title">Static Public Methods</h2>
 
 <div class="detail" data-ice="detail">
@@ -385,11 +560,11 @@ Represents a group of elements with chainable operations.</p>
     
     
     
-    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(pCollection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>): <span><a href="class/src/group.mjs~Group.html">Group</a></span></span>
+    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(pCollection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, pMethods: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="class/src/group.mjs~Group.html">Group</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber83">source</a></span></span>
     </span>
   </h3>
 
@@ -414,6 +589,13 @@ Represents a group of elements with chainable operations.</p>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>The initial collection to be grouped.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">pMethods</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>An object containing methods to attach to this group.</p>
 </td>
     </tr>
 </tbody>
@@ -462,11 +644,11 @@ Represents a group of elements with chainable operations.</p>
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(collection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(pCollection: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>, pMethods: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber28">source</a></span></span>
     </span>
   </h3>
 
@@ -487,10 +669,17 @@ Represents a group of elements with chainable operations.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">collection</td>
+      <td data-ice="name" class="code" data-depth="0">pCollection</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>The initial collection to be grouped.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">pMethods</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>An object containing methods to attach to this group.</p>
 </td>
     </tr>
 </tbody>
@@ -530,7 +719,7 @@ Represents a group of elements with chainable operations.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -576,7 +765,7 @@ Represents a group of elements with chainable operations.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber22">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber35">source</a></span></span>
     </span>
   </h3>
 
@@ -584,6 +773,50 @@ Represents a group of elements with chainable operations.</p>
   
   
   <div data-ice="description"><p>The internal collection of elements.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-collectionWeakMap">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">collectionWeakMap</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber12">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Weakmap to track data belonging to elements used in this module.</p>
 </div>
 
   
@@ -623,7 +856,7 @@ Represents a group of elements with chainable operations.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber63">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber116">source</a></span></span>
     </span>
   </h3>
 
@@ -686,6 +919,87 @@ Represents a group of elements with chainable operations.</p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-attachMethod">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">attachMethod</span><span class="code" data-ice="signature">(pMethodName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, pMethod: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="class/src/group.mjs~Group.html">Group</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber155">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Attaches a method to the group, allowing it to be called on the group to execute the method on each element.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">pMethodName</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>The name of the method to attach.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">pMethod</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>The method.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/group.mjs~Group.html">Group</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>The current Group instance for chaining.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-forEach">
     <span class="access" data-ice="access">public</span>
     
@@ -697,7 +1011,7 @@ Represents a group of elements with chainable operations.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber100">source</a></span></span>
     </span>
   </h3>
 
@@ -771,7 +1085,7 @@ Represents a group of elements with chainable operations.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber38">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber91">source</a></span></span>
     </span>
   </h3>
 
@@ -845,7 +1159,7 @@ Represents a group of elements with chainable operations.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber74">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber135">source</a></span></span>
     </span>
   </h3>
 
@@ -919,7 +1233,7 @@ Represents a group of elements with chainable operations.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber55">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 
@@ -941,6 +1255,84 @@ Represents a group of elements with chainable operations.</p>
         <tr>
           <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>A shallow copy of the current collection.</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<h2 data-ice="title">Private Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-generateID">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">generateID</span><span class="code" data-ice="signature">(pID: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/group.mjs.html#lineNumber61">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Generates a random ID based on the specified length and ensures its uniqueness
+within the stored IDs.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">pID</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default:  7</li></ul></td>
+      <td data-ice="description"><p>The length of the generated ID.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>A unique random ID.</p>
 </td>
         </tr>
       </tbody>
