@@ -34,14 +34,19 @@ class Group {
              */
             this.collection = [...pCollection];
             this.collection.forEach((pElement) => {
-                /**
-                 * Assign an ID object to each element in this group.
-                 */
-                this.collectionWeakMap.set(pElement, { 'id': this.generateID() });
-                /**
-                 * Assign a method event object to the ID attached to the element.
-                 */
-                this.collectionWeakMap.set(this.collectionWeakMap.get(pElement), {});
+                // Check if there are valid elements in the array
+                if (pElement) {
+                    /**
+                     * Assign an ID object to each element in this group.
+                     */
+                    this.collectionWeakMap.set(pElement, { 'id': this.generateID() });
+                    /**
+                     * Assign a method event object to the ID attached to the element.
+                     */
+                    this.collectionWeakMap.set(this.collectionWeakMap.get(pElement), {});
+                } else {
+                    console.error('Invalid value found in pCollection!');
+                }
             });
         }
         // Check the type of the passed methods object
@@ -114,6 +119,11 @@ class Group {
      * @returns {Group} The current Group instance for chaining.
      */
     add(pItem) {
+        // There was no item to add
+        if (!pItem) {
+            console.error('pItem was not passed');
+            return;
+        }
         if (!this.collection.includes(pItem)) {
             this.collection.push(pItem);
             /**
@@ -133,6 +143,11 @@ class Group {
      * @returns {Group} The current Group instance for chaining.
      */
     remove(pItem) {
+        // There was no item to remove
+        if (!pItem) {
+            console.error('pItem was not passed');
+            return;
+        }
         if (this.collection.includes(pItem)) {
             // Remove the ID from the item being removed from this group
             if (this.collectionWeakMap.has(pItem)) {
